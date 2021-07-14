@@ -1,0 +1,37 @@
+clc
+clear
+close all;
+
+%% reading the dataset
+load('arousal data.mat')
+d = arousal_data;
+best_features = [24    29    14     9    10    21    3    11    23    5];
+X = d(:,best_features);
+
+Lable_arousal = round(d(:,end)); 
+
+for i=1:7
+    ind(i) = {(Lable_arousal==i)};
+end
+new_Lable_arousal = Lable_arousal;
+
+
+%%
+% arcs = {[10 10], [20 10], [30 10], [40 10], [50 10], [60 10]...
+% [10 20], [20 20], [30 20], [40 20], [50 20], [60 20] ...
+% [10 30], [20 30], [30 30], [40 30], [50 30], [60 30]}
+arcs = {[60 30]};
+k_fold = 4;
+
+for i = 1:length(arcs)
+    i
+    value(i) = k_fold_cross_validaion_arc(X, Lable_arousal, k_fold, arcs{i});
+end
+
+% value_arousal =
+% 
+%     0.5730    0.6566    0.5382    0.5924    0.6241    0.5122    0.5909    0.5034    0.5065    0.5932    0.5733    0.5328    0.5646    0.5443    0.5512    0.5474    0.5722    0.4549
+% 
+% value_valance =
+% 
+%     0.8284    0.8202    0.8457    0.8233    0.8240    0.8272    0.8278    0.8329    0.8240    0.8151     0.8119    0.7921    0.8214    0.8061    0.8119    0.8048    0.8176    0.8214
